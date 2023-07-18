@@ -79,6 +79,7 @@ function TodoCard() {
                         placeholder="Enter a todo"
                         value={todo}
                         onChange={(e) => setTodo(e?.target?.value)}
+                        onPressEnter={createHandler}
                     />
                     <Button type="primary" onClick={createHandler}>
                         Submit
