@@ -24,7 +24,10 @@ function TodoCard() {
     const [todo, setTodo] = useState('');
     const [todoList, dispatch] = useReducer(todoReducer, initialState);
 
+    // eslint-disable-next-line consistent-return
     const createHandler = () => {
+        const modifiedTodo = todo?.trim();
+        if (!modifiedTodo) return undefined;
         dispatch({
             type: 'CREATE',
             payload: {
