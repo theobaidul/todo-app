@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Checkbox, Divider, Input, List, Space } from 'antd';
+import { Button, Card, Checkbox, Divider, Input, List, Space, message } from 'antd';
 import { useReducer, useState } from 'react';
 import Styles from '../assets/css/TodoCard.module.css';
 import getRandomId from '../utils/helper/getRandomId';
@@ -27,13 +27,23 @@ function TodoCard() {
     // eslint-disable-next-line consistent-return
     const createHandler = () => {
         const modifiedTodo = todo?.trim();
-        if (!modifiedTodo) return undefined;
+        if (!modifiedTodo) {
+            message.warning('Please enter a todo!');
+            return undefined;
+        }
+        const hasAlready = todoList?.some((item) => item?.todo === modifiedTodo);
+        if (hasAlready) {
+            // warning('Todo already exist!');
+            message.warning('Todo already exist!');
+            return undefined;
+        }
+
         dispatch({
             type: 'CREATE',
             payload: {
                 id: getRandomId(),
                 isSelected: false,
-                todo,
+                todo: modifiedTodo,
             },
         });
         setTodo('');
